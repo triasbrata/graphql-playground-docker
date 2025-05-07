@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path"
 	"strconv"
 )
 
@@ -18,7 +17,7 @@ type Config struct {
 }
 
 var (
-	tpl = template.Must(template.New("index.tmpl").ParseFiles(path.Join("src", "index.tmpl")))
+	tpl = template.Must(template.New("index.tmpl").ParseFS(IndexFile, "index.tmpl"))
 )
 
 func main() {
@@ -27,8 +26,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fs := http.FileServer(http.Dir(path.Join("src", "static")))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.FS(StaticFolder))
+	http.Handle("/static/", http.StripPrefix("/", fs),
+	)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if err := tpl.ExecuteTemplate(w, "index.tmpl", cfg); err != nil {
