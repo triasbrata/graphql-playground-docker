@@ -2,6 +2,8 @@
 
 A minimal Docker image for running [GraphQL Playground](https://github.com/graphql/graphiql) — served efficiently with Go, no Node.js needed.
 
+> Forked from [mkrou/graphql-playground-docker](https://github.com/mkrou/graphql-playground-docker)
+
 Spin up a full-featured GraphQL UI with a single Docker command.
 
 ---
