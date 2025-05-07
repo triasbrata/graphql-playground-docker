@@ -27,8 +27,7 @@ func main() {
 	}
 
 	fs := http.FileServer(http.FS(StaticFolder))
-	http.Handle("/static/", http.StripPrefix("/", fs),
-	)
+	http.Handle("/static/", http.StripPrefix("/", fs))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if err := tpl.ExecuteTemplate(w, "index.tmpl", cfg); err != nil {
@@ -36,7 +35,7 @@ func main() {
 		}
 	})
 
-	log.Printf("Server has started at port %d\n", cfg.Port)
+	log.Printf("Server has started at port http://0.0.0.0:%d\n", cfg.Port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), nil))
 
 }
