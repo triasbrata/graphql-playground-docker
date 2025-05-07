@@ -1,34 +1,51 @@
-<!DOCTYPE html>
-<html>
+<!--
+ *  Copyright (c) 2021 GraphQL Contributors
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the license found in the
+ *  LICENSE file in the root directory of this source tree.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.Title}}</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden; /* in Firefox */
+      }
 
-<head>
-    <meta charset=utf-8/>
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
-    <title>{{ .Title }}</title>
-    <link rel="shortcut icon" href="static/favicon.png" />
-    <link rel="stylesheet" href="static/index.css"/>
+      #graphiql {
+        height: 100dvh;
+      }
 
-    <script src="static/middleware.js"></script>
-</head>
-
-<body>
-<div id="root">
-    <link rel="stylesheet" href="static/style.css"/>
-    <img src='static/logo.png' alt=''>
-    <div class="loading"> Loading
-        <span class="title">{{ .Title }}</span>
-    </div>
+      .loading {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="/static/graphiql.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/plugin-explorer.css"
+    />
+    <!-- Note: the ?standalone flag bundles the module along with all of its `dependencies`, excluding `peerDependencies`, into a single JavaScript file. -->
     <script>
-        window.addEventListener('load', function (event) {
-            GraphQLPlayground.init(document.getElementById('root'), {
-                endpoint: "{{ .Host }}",
-                settings: {
-                    'editor.theme': '{{ .Theme }}'
-                }
-            })
-        })
+        window.__URL__ = "{{ .Host }}";
     </script>
-</div>
-</body>
-
+    <script type="module" src="/static/bundle.js"></script>
+  </head>
+  <body>
+    <div id="graphiql">
+      <div class="loading">Loading…</div>
+    </div>
+  </body>
 </html>
